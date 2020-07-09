@@ -1,0 +1,1 @@
+import{extname as s}from"path";var t=[".css",".less",".sass",".scss",".stylus",".styl"];function e(){return{visitor:{ImportDeclaration:function e(o,r){var a=r.opts;var c=o.node,l=c.specifiers,n=c.source,u=c.source.value;if(l.length&&t.includes(s(u))){n.value="".concat(u,"?").concat(a.flag||"modules")}}}}}export default e;

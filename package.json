@@ -1,0 +1,155 @@
+{
+  "name": "babel-plugin-auto-css-modules-flag",
+  "version": "0.0.1",
+  "description": "babel-plugin-auto-css-modules-flag",
+  "author": "qiqiboy",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "entryFile": "src/index.ts",
+  "exportName": "babel-plugin-auto-css-modules",
+  "files": [
+    "LICENSE",
+    "README.md",
+    "dist/",
+    "src/"
+  ],
+  "scripts": {
+    "build": "npm run lint && npm run clear && npm run build:declaration && npm run build:bundle",
+    "build:bundle": "rollup -c",
+    "build:declaration": "tsc --emitDeclarationOnly",
+    "clear": "rimraf dist",
+    "lint": "node_modules/.bin/eslint 'src/**/*.{js,jsx,ts,tsx}'",
+    "test": "node jest/test.js",
+    "tsc": "node -e \"require('fs-extra').outputJsonSync('.git-tsconfig.json',{ extends: './tsconfig.json', include: ['*.d.ts'].concat(process.env.StagedFiles.split(/\\n+/)) })\" && echo 'TS checking...\\n' && tsc -p .git-tsconfig.json --noEmit --checkJs false"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ],
+  "husky": {
+    "hooks": {
+      "commit-msg": "node_modules/.bin/commitlint --edit $HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged && export StagedFiles=$(git diff --diff-filter AM --name-only --relative --staged | grep -E '^src/.*\\.m?[jt]sx?$') && if [ -n \"$StagedFiles\"  ]; then npm run tsc ; fi"
+    }
+  },
+  "babel": {
+    "presets": [
+      "react-app"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ],
+    "rules": {
+      "subject-case": [
+        0
+      ],
+      "scope-case": [
+        0
+      ]
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "prettier": {
+    "printWidth": 120,
+    "tabWidth": 4,
+    "trailingComma": "none",
+    "jsxBracketSameLine": true,
+    "semi": true,
+    "arrowParens": "avoid",
+    "singleQuote": true,
+    "overrides": [
+      {
+        "files": "*.json",
+        "options": {
+          "tabWidth": 2
+        }
+      }
+    ]
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,mjs,ts,tsx}": [
+      "node_modules/.bin/prettier --write",
+      "node_modules/.bin/eslint --fix",
+      "git add"
+    ],
+    "src/**/*.{css,scss,less,json,html,md}": [
+      "node_modules/.bin/prettier --write",
+      "git add"
+    ]
+  },
+  "stylelint": {
+    "extends": "stylelint-config-recommended"
+  },
+  "peerDependencies": {},
+  "engines": {
+    "node": ">=8.10.0",
+    "tiger-new": "6.1.20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://qiqiboy@github.com/qiqiboy/babel-plugin-auto-css-modules.git"
+  },
+  "dependencies": {
+    "@babel/traverse": "^7.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "7.10.4",
+    "@babel/core": "7.10.4",
+    "@commitlint/cli": "8.3.5",
+    "@commitlint/config-conventional": "8.3.4",
+    "@rollup/plugin-commonjs": "11.1.0",
+    "@rollup/plugin-node-resolve": "7.1.3",
+    "@rollup/plugin-replace": "2.3.3",
+    "@testing-library/jest-dom": "5.11.0",
+    "@testing-library/react": "10.4.5",
+    "@testing-library/user-event": "10.4.1",
+    "@types/jest": "25.2.3",
+    "@types/node": "13.13.13",
+    "@types/react": "16.9.41",
+    "@types/react-dom": "16.9.8",
+    "@types/react-is": "16.7.1",
+    "@typescript-eslint/eslint-plugin": "2.34.0",
+    "@typescript-eslint/parser": "2.34.0",
+    "babel-eslint": "10.1.0",
+    "babel-jest": "25.5.1",
+    "babel-preset-react-app": "9.1.2",
+    "eslint": "6.8.0",
+    "eslint-config-react-app": "5.2.1",
+    "eslint-plugin-flowtype": "4.7.0",
+    "eslint-plugin-import": "2.22.0",
+    "eslint-plugin-jsx-a11y": "6.3.1",
+    "eslint-plugin-react": "7.20.3",
+    "eslint-plugin-react-hooks": "2.5.1",
+    "husky": "3.1.0",
+    "jest": "25.5.4",
+    "jest-environment-jsdom-fourteen": "1.0.1",
+    "jest-resolve": "25.5.1",
+    "jest-watch-typeahead": "0.4.2",
+    "lint-staged": "10.2.11",
+    "prettier": "2.0.5",
+    "prop-types": "15.7.2",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
+    "rimraf": "2.6.3",
+    "rollup": "1.32.1",
+    "rollup-plugin-babel": "4.4.0",
+    "rollup-plugin-copy": "3.3.0",
+    "rollup-plugin-filesize": "6.2.1",
+    "rollup-plugin-sass": "1.2.2",
+    "rollup-plugin-terser": "5.3.0",
+    "typescript": "3.9.6"
+  }
+}
